@@ -24,16 +24,16 @@ var vf = []float32{
 // to 26 digits (by using the "Digit number" drop-down control of each
 // calculator).
 var acos = []float32{
-	1.0496193546107222142571536e+00,
-	6.8584012813664425171660692e-01,
-	1.5984878714577160325521819e+00,
-	2.0956199361475859327461799e+00,
-	2.7053008467824138592616927e-01,
-	1.2738121680361776018155625e+00,
-	1.0205369421140629186287407e+00,
-	1.2945003481781246062157835e+00,
-	1.3872364345374451433846657e+00,
-	2.6231510803970463967294145e+00,
+	1.0496193e+00,
+	6.858401e-01,
+	1.5984878e+00,
+	2.0956199e+00,
+	2.705301e-01,
+	1.2738122e+00,
+	1.0205369e+00,
+	1.2945003e+00,
+	1.3872365e+00,
+	2.6231510e+00,
 }
 var acosh = []float32{
 	2.4743347004159012494457618e+00,
@@ -1833,6 +1833,26 @@ func alike(a, b float32) bool {
 	return false
 }
 
+func TestNaN(t *testing.T) {
+	f32 := NaN()
+	if f32 == f32 {
+		t.Fatalf("NaN() returns %g, expected NaN", f32)
+	}
+}
+
+func TestAcos(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		a := vf[i] / 10
+		if f := Acos(a); !close(acos[i], f) {
+			t.Errorf("Acos(%g) = %g, want %g", a, f, acos[i])
+		}
+	}
+	for i := 0; i < len(vfacosSC); i++ {
+		if f := Acos(vfacosSC[i]); !alike(acosSC[i], f) {
+			t.Errorf("Acos(%g) = %g, want %g", vfacosSC[i], f, acosSC[i])
+		}
+	}
+}
 func TestDim(t *testing.T) {
 	for i := 0; i < len(vf); i++ {
 		if f := Dim(vf[i], 0); fdim[i] != f {
