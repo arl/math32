@@ -569,7 +569,7 @@ var sqrt = []float32{
 	3.1042380236055381099288487e+00,
 	1.7106657298385224403917771e+00,
 	2.286718922705479046148059e+00,
-	1.6516476350711159636222979e+00,
+	1.6516476e+00,
 	1.3510396336454586262419247e+00,
 	2.9471892997524949215723329e+00,
 }
@@ -1690,7 +1690,7 @@ var sqrtSC = []float32{
 	0,
 	Inf(1),
 	NaN(),
-	3.1434555694052576e-162,
+	5.293956e-23,
 }
 
 var vftanhSC = []float32{
@@ -2231,6 +2231,20 @@ func TestHypot(t *testing.T) {
 	for i := 0; i < len(vfhypotSC); i++ {
 		if f := Hypot(vfhypotSC[i][0], vfhypotSC[i][1]); !alike(hypotSC[i], f) {
 			t.Errorf("Hypot(%g, %g) = %g, want %g", vfhypotSC[i][0], vfhypotSC[i][1], f, hypotSC[i])
+		}
+	}
+}
+
+func TestSqrt(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		a := Abs(vf[i])
+		if f := Sqrt(a); sqrt[i] != f {
+			t.Errorf("Sqrt(%g) = %g, want %g", a, f, sqrt[i])
+		}
+	}
+	for i := 0; i < len(vfsqrtSC); i++ {
+		if f := Sqrt(vfsqrtSC[i]); !alike(sqrtSC[i], f) {
+			t.Errorf("Sqrt(%g) = %g, want %g", vfsqrtSC[i], f, sqrtSC[i])
 		}
 	}
 }
