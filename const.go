@@ -1,3 +1,5 @@
+// Package math32 provides basic constants and mathematical functions for 32
+// bits floating point, based off the standard Go math package.
 package math32
 
 import "math"
