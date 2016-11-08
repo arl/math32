@@ -144,16 +144,16 @@ var copysign = []float32{
 	-8.6859247685756013e+00,
 }
 var cos = []float32{
-	2.634752140995199110787593e-01,
-	1.148551260848219865642039e-01,
+	2.634753e-01,
+	1.1485507e-01,
 	9.6191297325640768154550453e-01,
-	2.938141150061714816890637e-01,
-	-9.777138189897924126294461e-01,
+	2.9381394e-01,
+	-9.777139e-01,
 	-9.7693041344303219127199518e-01,
-	4.940088096948647263961162e-01,
-	-9.1565869021018925545016502e-01,
-	-2.517729313893103197176091e-01,
-	-7.39241351595676573201918e-01,
+	4.940089e-01,
+	-9.1565865e-01,
+	-2.517729e-01,
+	-7.392412e-01,
 }
 
 // Results for 100000 * Pi + vf[i]
@@ -170,16 +170,16 @@ var cosLarge = []float32{
 	-7.3924135157173099849e-01,
 }
 var cosh = []float32{
-	7.2668796942212842775517446e+01,
-	1.1479413465659254502011135e+03,
-	1.0385767908766418550935495e+00,
-	7.5000957789658051428857788e+01,
-	7.655246669605357888468613e+03,
-	9.3567491758321272072888257e+00,
-	9.331351599270605471131735e+01,
-	7.6833430994624643209296404e+00,
-	3.1829371625150718153881164e+00,
-	2.9595059261916188501640911e+03,
+	7.26687969e+01,
+	1.1479414e+03,
+	1.03857679e+00,
+	7.5000946e+01,
+	7.6552446e+03,
+	9.356749175e+00,
+	9.331352e+01,
+	7.6833425e+00,
+	3.182937162e+00,
+	2.9595051e+03,
 }
 var erf = []float32{
 	5.1865354817738701906913566e-01,
@@ -1957,6 +1957,50 @@ func TestCeil(t *testing.T) {
 	for i := 0; i < len(vfceilSC); i++ {
 		if f := Ceil(vfceilSC[i]); !alike(ceilSC[i], f) {
 			t.Errorf("Ceil(%g) = %g, want %g", vfceilSC[i], f, ceilSC[i])
+		}
+	}
+}
+
+func TestCopysign(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Copysign(vf[i], -1); copysign[i] != f {
+			t.Errorf("Copysign(%g, -1) = %g, want %g", vf[i], f, copysign[i])
+		}
+	}
+	for i := 0; i < len(vf); i++ {
+		if f := Copysign(vf[i], 1); -copysign[i] != f {
+			t.Errorf("Copysign(%g, 1) = %g, want %g", vf[i], f, -copysign[i])
+		}
+	}
+	for i := 0; i < len(vfcopysignSC); i++ {
+		if f := Copysign(vfcopysignSC[i], -1); !alike(copysignSC[i], f) {
+			t.Errorf("Copysign(%g, -1) = %g, want %g", vfcopysignSC[i], f, copysignSC[i])
+		}
+	}
+}
+
+func TestCos(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Cos(vf[i]); !veryclose(cos[i], f) {
+			t.Errorf("Cos(%g) = %g, want %g", vf[i], f, cos[i])
+		}
+	}
+	for i := 0; i < len(vfcosSC); i++ {
+		if f := Cos(vfcosSC[i]); !alike(cosSC[i], f) {
+			t.Errorf("Cos(%g) = %g, want %g", vfcosSC[i], f, cosSC[i])
+		}
+	}
+}
+
+func TestCosh(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Cosh(vf[i]); !close(cosh[i], f) {
+			t.Errorf("Cosh(%g) = %g, want %g", vf[i], f, cosh[i])
+		}
+	}
+	for i := 0; i < len(vfcoshSC); i++ {
+		if f := Cosh(vfcoshSC[i]); !alike(coshSC[i], f) {
+			t.Errorf("Cosh(%g) = %g, want %g", vfcoshSC[i], f, coshSC[i])
 		}
 	}
 }
