@@ -392,13 +392,13 @@ var lgamma = []fi{
 	{-1.077385130910300066425564e+01, -1},
 }
 var log = []float32{
-	1.605231462693062999102599e+00,
+	1.6052315e+00,
 	2.0462560018708770653153909e+00,
 	-1.2841708730962657801275038e+00,
 	1.6115563905281545116286206e+00,
 	2.2655365644872016636317461e+00,
 	1.0737652208918379856272735e+00,
-	1.6542360106073546632707956e+00,
+	1.6542361 + 00,
 	1.0035467127723465801264487e+00,
 	6.0174879014578057187016475e-01,
 	2.161703872847352815363655e+00,
@@ -2248,6 +2248,23 @@ func TestSqrt(t *testing.T) {
 	for i := 0; i < len(vfsqrtSC); i++ {
 		if f := Sqrt(vfsqrtSC[i]); !alike(sqrtSC[i], f) {
 			t.Errorf("Sqrt(%g) = %g, want %g", vfsqrtSC[i], f, sqrtSC[i])
+		}
+	}
+}
+
+func TestLog(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		a := Abs(vf[i])
+		if f := Log(a); log[i] != f {
+			t.Errorf("Log(%g) = %g, want %g", a, f, log[i])
+		}
+	}
+	if f := Log(10); f != Ln10 {
+		t.Errorf("Log(%g) = %g, want %g", 10.0, f, Ln10)
+	}
+	for i := 0; i < len(vflogSC); i++ {
+		if f := Log(vflogSC[i]); !alike(logSC[i], f) {
+			t.Errorf("Log(%g) = %g, want %g", vflogSC[i], f, logSC[i])
 		}
 	}
 }
