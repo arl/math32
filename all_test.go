@@ -1935,6 +1935,32 @@ func TestAtan2(t *testing.T) {
 	}
 }
 
+func TestCbrt(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Cbrt(vf[i]); !veryclose(cbrt[i], f) {
+			t.Errorf("Cbrt(%g) = %g, want %g", vf[i], f, cbrt[i])
+		}
+	}
+	for i := 0; i < len(vfcbrtSC); i++ {
+		if f := Cbrt(vfcbrtSC[i]); !alike(cbrtSC[i], f) {
+			t.Errorf("Cbrt(%g) = %g, want %g", vfcbrtSC[i], f, cbrtSC[i])
+		}
+	}
+}
+
+func TestCeil(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Ceil(vf[i]); ceil[i] != f {
+			t.Errorf("Ceil(%g) = %g, want %g", vf[i], f, ceil[i])
+		}
+	}
+	for i := 0; i < len(vfceilSC); i++ {
+		if f := Ceil(vfceilSC[i]); !alike(ceilSC[i], f) {
+			t.Errorf("Ceil(%g) = %g, want %g", vfceilSC[i], f, ceilSC[i])
+		}
+	}
+}
+
 func TestDim(t *testing.T) {
 	for i := 0; i < len(vf); i++ {
 		if f := Dim(vf[i], 0); fdim[i] != f {
