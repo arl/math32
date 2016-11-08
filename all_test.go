@@ -290,16 +290,16 @@ var floor = []float32{
 	-9.0000000000000000e+00,
 }
 var fmod = []float32{
-	4.197615023265299782906368e-02,
-	2.261127525421895434476482e+00,
-	3.231794108794261433104108e-02,
-	4.989396381728925078391512e+00,
-	3.637062928015826201999516e-01,
-	1.220868282268106064236690e+00,
-	4.770916568540693347699744e+00,
-	1.816180268691969246219742e+00,
-	8.734595415957246977711748e-01,
-	1.314075231424398637614104e+00,
+	4.1975975e-02,
+	2.2611275e+00,
+	3.2317996e-02,
+	4.9893966e+00,
+	3.637066e-01,
+	1.2208681e+00,
+	4.7709165e+00,
+	1.8161805e+00,
+	8.734596e-01,
+	1.3140755e+00,
 }
 
 type fi struct {
@@ -2093,6 +2093,20 @@ func testExp2(t *testing.T, Exp2 func(float32) float32, name string) {
 		}
 	}
 }
+
+func TestAbs(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Abs(vf[i]); fabs[i] != f {
+			t.Errorf("Abs(%g) = %g, want %g", vf[i], f, fabs[i])
+		}
+	}
+	for i := 0; i < len(vffabsSC); i++ {
+		if f := Abs(vffabsSC[i]); !alike(fabsSC[i], f) {
+			t.Errorf("Abs(%g) = %g, want %g", vffabsSC[i], f, fabsSC[i])
+		}
+	}
+}
+
 func TestDim(t *testing.T) {
 	for i := 0; i < len(vf); i++ {
 		if f := Dim(vf[i], 0); fdim[i] != f {
@@ -2111,6 +2125,37 @@ func TestDim(t *testing.T) {
 	}
 }
 
+func TestFloor(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Floor(vf[i]); floor[i] != f {
+			t.Errorf("Floor(%g) = %g, want %g", vf[i], f, floor[i])
+		}
+	}
+	for i := 0; i < len(vfceilSC); i++ {
+		if f := Floor(vfceilSC[i]); !alike(ceilSC[i], f) {
+			t.Errorf("Floor(%g) = %g, want %g", vfceilSC[i], f, ceilSC[i])
+		}
+	}
+}
+
+func TestMax(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Max(vf[i], ceil[i]); ceil[i] != f {
+			t.Errorf("Max(%g, %g) = %g, want %g", vf[i], ceil[i], f, ceil[i])
+		}
+	}
+	for i := 0; i < len(vffdimSC); i++ {
+		if f := Max(vffdimSC[i][0], vffdimSC[i][1]); !alike(fmaxSC[i], f) {
+			t.Errorf("Max(%g, %g) = %g, want %g", vffdimSC[i][0], vffdimSC[i][1], f, fmaxSC[i])
+		}
+	}
+	for i := 0; i < len(vffdim2SC); i++ {
+		if f := Max(vffdim2SC[i][0], vffdim2SC[i][1]); !alike(fmaxSC[i], f) {
+			t.Errorf("Max(%g, %g) = %g, want %g", vffdim2SC[i][0], vffdim2SC[i][1], f, fmaxSC[i])
+		}
+	}
+}
+
 func TestMin(t *testing.T) {
 	for i := 0; i < len(vf); i++ {
 		if f := Min(vf[i], floor[i]); floor[i] != f {
@@ -2125,6 +2170,37 @@ func TestMin(t *testing.T) {
 	for i := 0; i < len(vffdim2SC); i++ {
 		if f := Min(vffdim2SC[i][0], vffdim2SC[i][1]); !alike(fminSC[i], f) {
 			t.Errorf("Min(%g, %g) = %g, want %g", vffdim2SC[i][0], vffdim2SC[i][1], f, fminSC[i])
+		}
+	}
+}
+
+func TestMod(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Mod(10, vf[i]); fmod[i] != f {
+			t.Errorf("Mod(10, %g) = %g, want %g", vf[i], f, fmod[i])
+		}
+	}
+	for i := 0; i < len(vffmodSC); i++ {
+		if f := Mod(vffmodSC[i][0], vffmodSC[i][1]); !alike(fmodSC[i], f) {
+			t.Errorf("Mod(%g, %g) = %g, want %g", vffmodSC[i][0], vffmodSC[i][1], f, fmodSC[i])
+		}
+	}
+}
+
+func TestFrexp(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f, j := Frexp(vf[i]); !veryclose(frexp[i].f, f) || frexp[i].i != j {
+			t.Errorf("Frexp(%g) = %g, %d, want %g, %d", vf[i], f, j, frexp[i].f, frexp[i].i)
+		}
+	}
+	for i := 0; i < len(vffrexpSC); i++ {
+		if f, j := Frexp(vffrexpSC[i]); !alike(frexpSC[i].f, f) || frexpSC[i].i != j {
+			t.Errorf("Frexp(%g) = %g, %d, want %g, %d", vffrexpSC[i], f, j, frexpSC[i].f, frexpSC[i].i)
+		}
+	}
+	for i := 0; i < len(vffrexpBC); i++ {
+		if f, j := Frexp(vffrexpBC[i]); !alike(frexpBC[i].f, f) || frexpBC[i].i != j {
+			t.Errorf("Frexp(%g) = %g, %d, want %g, %d", vffrexpBC[i], f, j, frexpBC[i].f, frexpBC[i].i)
 		}
 	}
 }
