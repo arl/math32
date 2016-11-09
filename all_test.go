@@ -488,16 +488,16 @@ var nextafter64 = []float32{
 	-8.68592476857559958602905681e+00,
 }
 var pow = []float32{
-	9.5282232631648411840742957e+04,
-	5.4811599352999901232411871e+07,
+	9.528225e+04,
+	5.481161e+07,
 	5.2859121715894396531132279e-01,
-	9.7587991957286474464259698e-06,
-	4.328064329346044846740467e+09,
-	8.4406761805034547437659092e+02,
-	1.6946633276191194947742146e+05,
-	5.3449040147551939075312879e+02,
+	9.758804e-06,
+	4.3280614e+09,
+	8.4406775e+02,
+	1.6946638e+05,
+	5.344903e+02,
 	6.688182138451414936380374e+01,
-	2.0609869004248742886827439e-09,
+	2.060988e-09,
 }
 var remainder = []float32{
 	4.197615023265299782906368e-02,
@@ -2265,6 +2265,27 @@ func TestLog(t *testing.T) {
 	for i := 0; i < len(vflogSC); i++ {
 		if f := Log(vflogSC[i]); !alike(logSC[i], f) {
 			t.Errorf("Log(%g) = %g, want %g", vflogSC[i], f, logSC[i])
+		}
+	}
+}
+
+func TestPow(t *testing.T) {
+	for i := 0; i < len(vf); i++ {
+		if f := Pow(10, vf[i]); !close(pow[i], f) {
+			t.Errorf("Pow(10, %g) = %g, want %g", vf[i], f, pow[i])
+		}
+	}
+	for i := 0; i < len(vfpowSC); i++ {
+		if f := Pow(vfpowSC[i][0], vfpowSC[i][1]); !alike(powSC[i], f) {
+			t.Errorf("Pow(%g, %g) = %g, want %g", vfpowSC[i][0], vfpowSC[i][1], f, powSC[i])
+		}
+	}
+}
+
+func TestPow10(t *testing.T) {
+	for i := 0; i < len(vfpow10SC); i++ {
+		if f := Pow10(vfpow10SC[i]); !alike(pow10SC[i], f) {
+			t.Errorf("Pow10(%d) = %g, want %g", vfpow10SC[i], f, pow10SC[i])
 		}
 	}
 }
