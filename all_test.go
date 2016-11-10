@@ -2328,12 +2328,49 @@ func TestApprox(t *testing.T) {
 		{1e12, 1e12 - 0.01, true},
 		{NaN(), 0, false},
 		{NaN(), NaN(), false},
+		// TODO: missing some +Inf/-Inf test cases
 	}
 
 	for _, tt := range approxTests {
 		got := Approx(tt.x, tt.y)
 		if got != tt.want {
 			t.Errorf("Approx(%f, %f) == %t, want %t", tt.x, tt.y, got, tt.want)
+		}
+	}
+}
+
+func TestApproxEpsilon(t *testing.T) {
+	approxTests := []struct {
+		x, y float32
+		epsf float32 // epsilon
+		want bool    // true means equal
+	}{
+		// same epsilon value as in Approx
+		{1.0, 1.0, epsilon32 * 100, true},
+		{1.0, 1.000001, epsilon32 * 100, true},
+		{1.0, 1.00001, epsilon32 * 100, true},
+		{1.0, 1.0001, epsilon32 * 100, false},
+		{1.0, 1.001, epsilon32 * 100, false},
+		{1.0, 1.01, epsilon32 * 100, false},
+		{1.0, 1.00001, 0.00001, true},
+		{1.0, 1.0001, 0.0001, true},
+		{1.0, 1.001, 0.001, true},
+		{1.0, 1.01, 0.01, true},
+		{1.0, 1.1, 0.1, true},
+		{10, 9.999990, 0.000001, true},
+		{10, 9.999989, 0.000001, false},
+		{10, 9.999988, 0.000001, false},
+		{10, 10.000012, 0.000001, false},
+		{10, 10.000011, 0.000001, false},
+		{10, 10.000010, 0.000001, true},
+		{NaN(), 0, 0.1, false},
+		{NaN(), NaN(), 0.1, false},
+	}
+
+	for _, tt := range approxTests {
+		got := ApproxEpsilon(tt.x, tt.y, tt.epsf)
+		if got != tt.want {
+			t.Errorf("ApproxEpsilon(%f, %f, eps=%f) == %t, want %t", tt.x, tt.y, tt.epsf, got, tt.want)
 		}
 	}
 }
