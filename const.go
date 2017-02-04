@@ -25,6 +25,6 @@ const (
 // Max is the largest finite value representable by the type.
 // SmallestNonzero is the smallest positive, non-zero value representable by the type.
 const (
-	MaxFloat32             = math.MaxFloat32             // 2**127 * (2**24 - 1) / 2**23
-	SmallestNonzeroFloat32 = math.SmallestNonzeroFloat32 // 1 / 2**(127 - 1 + 23)
+	MaxFloat32             = float32(math.MaxFloat32)
+	SmallestNonzeroFloat32 = float32(math.SmallestNonzeroFloat32)
 )
