@@ -1,5 +1,5 @@
 # math32 - 32 bit wrapper around the standard Go math package
-[![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/aurelien-rainone/math32) [![Build Status](https://travis-ci.org/aurelien-rainone/math32.svg?branch=master)](https://travis-ci.org/aurelien-rainone/math32) [![Coverage Status](https://coveralls.io/repos/github/aurelien-rainone/math32/badge.svg?branch=master)](https://coveralls.io/github/aurelien-rainone/math32?branch=master)
+[![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/arl/math32) [![Build Status](https://travis-ci.org/arl/math32.svg?branch=master)](https://travis-ci.org/arl/math32) [![Coverage Status](https://coveralls.io/repos/github/arl/math32/badge.svg?branch=master)](https://coveralls.io/github/arl/math32?branch=master)
 
 
 Package `math32` provides basic constants and mathematical functions for 32 
