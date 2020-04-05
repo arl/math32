@@ -2,6 +2,16 @@ package math32
 
 import "math"
 
+// Dim returns the maximum of x-y or 0.
+//
+// Special cases are:
+//	Dim(+Inf, +Inf) = NaN
+//	Dim(-Inf, -Inf) = NaN
+//	Dim(x, NaN) = Dim(NaN, x) = NaN
+func Dim(x, y float32) float32 {
+	return float32(math.Dim(float64(x), float64(y)))
+}
+
 // Max returns the larger of x or y.
 //
 // Special cases are:
@@ -21,14 +31,4 @@ func Max(x, y float32) float32 {
 //	Min(-0, ±0) = Min(±0, -0) = -0
 func Min(x, y float32) float32 {
 	return float32(math.Min(float64(x), float64(y)))
-}
-
-// Dim returns the maximum of x-y or 0.
-//
-// Special cases are:
-//	Dim(+Inf, +Inf) = NaN
-//	Dim(-Inf, -Inf) = NaN
-//	Dim(x, NaN) = Dim(NaN, x) = NaN
-func Dim(x, y float32) float32 {
-	return float32(math.Dim(float64(x), float64(y)))
 }
