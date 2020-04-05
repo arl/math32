@@ -4,8 +4,8 @@ sudo: false
 install: true
 
 go: 
- - "1.7"
- - master
+ - "1.14"
+ - tip
 
 
 matrix:
