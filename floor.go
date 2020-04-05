@@ -31,3 +31,13 @@ func Ceil(x float32) float32 {
 func Trunc(x float32) float32 {
 	return float32(math.Trunc(float64(x)))
 }
+
+// RoundToEven returns the nearest integer, rounding ties to even.
+//
+// Special cases are:
+//	RoundToEven(±0) = ±0
+//	RoundToEven(±Inf) = ±Inf
+//	RoundToEven(NaN) = NaN
+func RoundToEven(x float32) float32 {
+	return float32(math.RoundToEven(float64(x)))
+}
